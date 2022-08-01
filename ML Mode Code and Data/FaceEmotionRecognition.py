@@ -2,7 +2,7 @@ import sys
 sys.path.append('C:\\users\\yoyoy\\anaconda3\\envs\\rl\\lib\\site-packages')
 
 
-# In[7]:
+# In[2]:
 
 
 import tensorflow as tf
@@ -21,13 +21,13 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-# In[8]:
+# In[3]:
 
 
-new_model = keras.models.load_model("FER13_Accuracy95.h5")
+new_model = keras.models.load_model("FER13_Accuracy94.h5")
 
 
-# In[10]:
+# In[5]:
 
 
 path = "haarcascade_forntalface_default.xml"
@@ -199,8 +199,6 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
-
-# In[ ]:
 
 
 
