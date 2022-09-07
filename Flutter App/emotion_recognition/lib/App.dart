@@ -47,19 +47,32 @@ class _AppState extends State<App>{
       ),
 
       body: ListView(
+        padding: EdgeInsets.all(20.0),
         children: <Widget>[
-          Text(
-            category != null ? category!.label : '',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700)
+          Center(
+            child: Text(
+              category != null ? category!.label : '',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700)
+            )
           ),
 
-          Text(
-            category != null
-                ? 'Confidence: ${category!.score.toStringAsFixed(3)}'
-                : '',
-            style: TextStyle(fontSize: 16),
+          SizedBox(
+            height: 7.0,
+          ),
+
+          Center(
+          child:Text(
+              category != null
+                  ? 'Confidence: ${category!.score.toStringAsFixed(3)}'
+                  : '',
+              style: TextStyle(fontSize: 16),
+            )
+          ),
+
+          SizedBox(
+            height: 20.0,
           ),
 
           Center(
@@ -79,45 +92,56 @@ class _AppState extends State<App>{
             ),
           ),
 
-        Row(
-          children: <Widget>[
-             TextButton(
-                onPressed: selectFromCamera,
+          SizedBox(
+            height: 10.0,
+          ),
+
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+               TextButton(
+                  onPressed: selectFromCamera,
+                  child: Text(
+                      "Camera",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400
+                      ),
+                  ),
+                  style: TextButton.styleFrom(backgroundColor: Colors.grey),
+              ),
+
+              SizedBox(
+                width: 20.0,
+              ),
+
+              TextButton(
+                onPressed: selectFromGallery,
                 child: Text(
-                    "Camera",
-                    style: TextStyle(
+                  "Gallery",
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w400
-                    ),
+                  ),
                 ),
                 style: TextButton.styleFrom(backgroundColor: Colors.grey),
-            ),
-
-            TextButton(
-              onPressed: selectFromGallery,
-              child: Text(
-                "Gallery",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400
-                ),
               ),
-              style: TextButton.styleFrom(backgroundColor: Colors.grey),
-            ),
 
-            // FlatButton.icon(
-            //     onPressed: selectFromGallery,
-            //     icon: Icon(Icons.file_upload),
-            //     label: Text("Gallery")
-            // ),
+              // FlatButton.icon(
+              //     onPressed: selectFromGallery,
+              //     icon: Icon(Icons.file_upload),
+              //     label: Text("Gallery")
+              // ),
 
-            // FlatButton.icon(
-            //     onPressed: selectFromCamera,
-            //     icon: Icon(Icons.camera_alt),
-            //     label: Text("Camera")
-            // ),
+              // FlatButton.icon(
+              //     onPressed: selectFromCamera,
+              //     icon: Icon(Icons.camera_alt),
+              //     label: Text("Camera")
+              // ),
 
-            ],
+              ],
+            )
           )
         ]
       )
