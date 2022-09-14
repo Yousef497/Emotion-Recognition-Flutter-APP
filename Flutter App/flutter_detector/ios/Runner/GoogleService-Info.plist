@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>410697548872-0n29u74elnn6c4d0s6smbng5gc1soi2f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.410697548872-0n29u74elnn6c4d0s6smbng5gc1soi2f</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBpf-2-Xd3JFdCPT2nfMpt7q0mVUWHdoM0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>410697548872</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.raccoon.flutter.flutterDetector</string>
+	<key>PROJECT_ID</key>
+	<string>face-detection-a3f30</string>
+	<key>STORAGE_BUCKET</key>
+	<string>face-detection-a3f30.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:410697548872:ios:d0bc111eb50d05d90e847d</string>
+</dict>
+</plist>

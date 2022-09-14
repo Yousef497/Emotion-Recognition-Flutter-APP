@@ -1,35 +1,77 @@
 {
   "project_info": {
-    "project_number": "926787527907",
-    "firebase_url": "https://detector-6d28f.firebaseio.com",
-    "project_id": "detector-6d28f",
-    "storage_bucket": "detector-6d28f.appspot.com"
+    "project_number": "410697548872",
+    "project_id": "face-detection-a3f30",
+    "storage_bucket": "face-detection-a3f30.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:926787527907:android:7ddd82a42439e7c33f11d6",
+        "mobilesdk_app_id": "1:410697548872:android:0622217171f95c840e847d",
         "android_client_info": {
-          "package_name": "com.raccoon.tflite.flutter_detector"
+          "package_name": "com.example.face_detection"
         }
       },
       "oauth_client": [
         {
-          "client_id": "926787527907-vqdvbupiu6d9s2v70gb8s0e0rrill27v.apps.googleusercontent.com",
+          "client_id": "410697548872-jb3h2fdh1b5iopkdt839crps4533iri6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDjPbgxeVeIz_L4gnWfV-35IWgEq_st2MY"
+          "current_key": "AIzaSyCjV8ThRqQpqLef4hQdlvsx99fSyM8nfB8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "926787527907-vqdvbupiu6d9s2v70gb8s0e0rrill27v.apps.googleusercontent.com",
+              "client_id": "410697548872-jb3h2fdh1b5iopkdt839crps4533iri6.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "410697548872-gq663t1d4au1eceq58hs44h5dik8t7kk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.faceDetection"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410697548872:android:77851ee39e8a75a00e847d",
+        "android_client_info": {
+          "package_name": "com.raccoon.tflite.flutter_detector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410697548872-jb3h2fdh1b5iopkdt839crps4533iri6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjV8ThRqQpqLef4hQdlvsx99fSyM8nfB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410697548872-jb3h2fdh1b5iopkdt839crps4533iri6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "410697548872-gq663t1d4au1eceq58hs44h5dik8t7kk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.faceDetection"
+              }
             }
           ]
         }
