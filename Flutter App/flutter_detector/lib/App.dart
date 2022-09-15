@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter_detector/main.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
 
 class App extends StatefulWidget{
@@ -18,6 +20,14 @@ class _AppState extends State<App>{
   CameraImage cameraImage;
   CameraDescription description;
   CameraLensDirection cameraDirection = CameraLensDirection.front;
+
+  bool _loading = true;
+  bool _stream = false;
+  bool _cam = false;
+  File _image;
+  List _output;
+  Image _imageWidget;
+  final picker = ImagePicker();
 
   static Future<CameraDescription> getCamera(CameraLensDirection cameraLensDirection) async{
     return await availableCameras().then(
@@ -62,7 +72,7 @@ class _AppState extends State<App>{
 
   void runModelOnStreamFrames() async {
     if(cameraImage != null){
-      var recognitions = await Tflite.runModelOnFrame(
+      final recognitions = await Tflite.runModelOnFrame(
           bytesList: cameraImage.planes.map((plane) {
             return plane.bytes;
           }).toList(),
@@ -91,6 +101,61 @@ class _AppState extends State<App>{
     }
   }
 
+  void runModelOnImages(File image) async {
+    final recognitions = await Tflite.runModelOnImage(
+        path: image.path,
+        numResults: 7,
+        imageMean: 127.5,
+        imageStd: 127.5,
+        threshold: 0.1,
+        asynch: true,
+    );
+
+    result = "";
+
+    result += recognitions[0]["label"].toString() + " " + (recognitions[0]["confidence"] as double).toStringAsFixed(2) + "\n\n";
+
+    setState(() {
+      _output = recognitions;
+      _loading = false;
+      result;
+    });
+  }
+
+  void selectFromGallery() async {
+    final pickedFile = await ImagePicker.pickImage(
+      source: ImageSource.gallery
+    );
+
+    // if(pickedFile == null)
+    //   return;
+
+    setState(() {
+      _image = File(pickedFile.path);
+      _imageWidget = Image.file(_image);
+
+    });
+
+    runModelOnImages(_image);
+  }
+
+  void selectFromCamera() async {
+    final pickedFile = await ImagePicker.pickImage(
+        source: ImageSource.camera
+    );
+
+    // if(pickedFile == null)
+    //   return;
+
+    setState(() {
+      _image = File(pickedFile.path);
+      _imageWidget = Image.file(_image);
+
+    });
+
+    runModelOnImages(_image);
+  }
+
   void toggleCameraToFrontOrBack() async {
     if(cameraDirection == CameraLensDirection.back)
       cameraDirection = CameraLensDirection.front;
@@ -107,10 +172,14 @@ class _AppState extends State<App>{
     initCamera();
   }
 
+  void startLiveStream() async {
+    initCamera();
+  }
+
   @override
   void initState() {
     super.initState();
-    initCamera();
+    //initCamera();
     loadModel();
   }
 
@@ -127,7 +196,7 @@ class _AppState extends State<App>{
       home: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-              title: Center(
+              title: const Center(
                 child: Text("Emotion Recognition"),
               )
           ),
@@ -137,9 +206,12 @@ class _AppState extends State<App>{
               children: [
 
                 Stack(
-                  children: [
-                    Center(
-                        child: Container(
+                  children: <Widget>[
+
+                    // add some code if image widget == null ? live stream : image widget
+
+                    (_imageWidget == null) ? Center(
+                        child: (_stream == true) ? Container(
                           height: 410,
                           width: 330,
                           //child: Image.asset("assets/1.jpg"), // change this photo
@@ -147,23 +219,54 @@ class _AppState extends State<App>{
                             aspectRatio: cameraController.value.aspectRatio,
                             child: CameraPreview(cameraController),
                               ),
-                          color: Colors.black,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                      )
+
+                      : Container(
+                          height: 410,
+                          width: 330,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                        ),
+                    )
+
+                    : Center(
+                      child: (_cam == true) ? Container(
+                        height: 410,
+                        width: 330,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
+
+                        child: _imageWidget,
+                      )
+
+                      : Container(
+                        height: 410,
+                        width: 330,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
                       ),
                     ),
 
                   ],
                 ),
 
-                SizedBox(
-                  height: 40,
+                const SizedBox(
+                  height: 20,
                 ),
 
                 //here put the widgets of the prediction and confidence
-                Center(
+
+                ((_stream == false) && (_cam == false)) ? Center(           // condition to be improved
                   child: Container(
                     child: SingleChildScrollView(
                       child: Text(
-                        result,
+                        "Press any button\n\n",
                         style: TextStyle(
                           fontSize: 25.0,
                           color: Colors.black
@@ -173,17 +276,38 @@ class _AppState extends State<App>{
                       ),
                     ),
                   ),
+                )
+
+                : Center(
+                  child: Container(
+                    child: SingleChildScrollView(
+                      child: Text(
+                        result,
+                        style: TextStyle(
+                            fontSize: 25.0,
+                            color: Colors.black
+                        ),
+
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                 ),
 
-                SizedBox(
-                  height: 10,
+                const SizedBox(
+                  height: 5,
                 ),
 
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton(
-                        onPressed: null,
+                        onPressed: (){
+                          selectFromGallery();
+                          _stream = false;
+                          _cam = true;
+                          cameraController.dispose();              // to be coded photo from gallery
+                        },
                         backgroundColor: Colors.teal,
                         elevation: 3.0,
                         child: const Icon(
@@ -192,12 +316,36 @@ class _AppState extends State<App>{
                         ),
                       ),
 
-                      SizedBox(
-                        width: 60,
+                      const SizedBox(
+                        width: 30,
                       ),
 
                       FloatingActionButton(
-                        onPressed: null,
+                        onPressed: () {
+                          selectFromCamera();
+                          _stream = false;
+                          _cam = true;
+                          cameraController.dispose();
+                        },                     // to be coded photo from camera
+                        backgroundColor: Colors.teal,
+                        elevation: 3.0,
+                        child: Icon(
+                          Icons.camera,
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        width: 30,
+                      ),
+
+                      FloatingActionButton(
+                        onPressed: (){
+                          _imageWidget = null;
+                          _cam = false;
+                          _stream = true;
+                          startLiveStream();
+                        },
                         backgroundColor: Colors.teal,
                         elevation: 3.0,
                         child: const Icon(
@@ -206,13 +354,17 @@ class _AppState extends State<App>{
                         ),
                       ),
 
-                      SizedBox(
-                        width: 60,
+                      const SizedBox(
+                        width: 30,
                       ),
 
                       FloatingActionButton(
                         onPressed: (){
+                          _imageWidget = null;
+                          _cam = false;
+                          _stream = true;
                           toggleCameraToFrontOrBack();
+                          startLiveStream();
                         },
                         backgroundColor: Colors.teal,
                         elevation: 3.0,

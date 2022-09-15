@@ -17,6 +17,9 @@ dependencies:
   provider: ^4.3.2+1
   tflite: ^1.1.1
   camera: ^0.5.8+5
+  image_picker: ^0.5.4+3
+#  image_picker: ^0.8.3+2
+#  image: ^3.2.0
 #  firebase_ml_vision: ^0.9.10
 #  firebase_core: ^1.21.1
 #  get: ^4.3.8
